@@ -1,0 +1,80 @@
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://java.sun.com/xml/ns/javaee"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+	version="3.0">
+	<display-name>Archetype Created Web Application</display-name>
+
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>
+			classpath:ss/application-context.xml
+			classpath:ss/security-context.xml
+		</param-value>
+	</context-param>
+	<listener>
+		<listener-class>ss.ContextLoaderListener2</listener-class>
+	</listener>
+	
+	<!-- 중복 로그인 방지 기능을 위한 필터  -->
+<!-- 	<listener>  -->
+<!-- 		<listener-class>ss.HttpSessionEventPublisher2</listener-class> -->
+<!-- 	</listener> -->
+	
+	<!-- Request 객체 참조하기 위한 리스너 -->	
+<!-- 	<listener> -->
+<!-- 		<listener-class>ss.RequestContextListener2</listener-class> -->
+<!-- 	</listener> -->
+	<!-- 중복 로그인 방지 기능을 위한 필터  -->
+	<listener> 
+		<listener-class>org.springframework.security.web.session.HttpSessionEventPublisher</listener-class>
+	</listener>
+	
+	<!-- Request 객체 참조하기 위한 리스너 -->	
+	<listener>
+		<listener-class>org.springframework.web.context.request.RequestContextListener</listener-class>
+	</listener>
+	
+	<filter>
+		<filter-name>encodingFilter</filter-name>
+		<filter-class>ss.CharacterEncodingFilter2</filter-class>
+		<init-param>
+			<param-name>encoding</param-name>
+			<param-value>utf-8</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>encodingFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+
+	<servlet>
+		<servlet-name>dispatcherServlet</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<init-param>
+			<param-name>contextConfigLocation</param-name>
+			<param-value>classpath:ss/dispatcher-context.xml</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>dispatcherServlet</servlet-name>
+		<url-pattern>/rest/api/extractLibraries</url-pattern>
+	</servlet-mapping> 
+	<servlet-mapping>
+		<servlet-name>dispatcherServlet</servlet-name>
+		<url-pattern>*.do</url-pattern>
+	</servlet-mapping>
+	
+<!-- 	<servlet> -->
+<!-- 		<description>Hello World Servlet</description> -->
+<!-- 		<display-name>Hello World</display-name> -->
+<!-- 		<servlet-name>dispatcherServlet</servlet-name> -->
+<!-- 		<servlet-class>example.HelloWorld</servlet-class> -->
+<!-- 		<load-on-startup>1</load-on-startup> -->
+<!-- 	</servlet> -->
+
+<!-- 	<servlet-mapping> -->
+<!-- 		<servlet-name>dispatcherServlet</servlet-name> -->
+<!-- 		<url-pattern>/aa</url-pattern> -->
+<!-- 	</servlet-mapping> -->
+</web-app>
